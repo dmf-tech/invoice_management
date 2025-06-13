@@ -64,3 +64,8 @@ The UI looks great now, but the filter and sort functions no longer work on upda
 ```markdown
 Ensure the table header aligns correctly with its content. Add a consistently styled "Edit" button in the Action column. Restore and enhance the sort functionality allow sorting by Status, Due Date, and Amount. Maintain consistency in button design, and ensure the table data remains accurately aligned with the dashboard metrics.
 ```
+
+### Hamburger Menu Responsiveness
+```markdown
+Improve the hamburger menu behavior. It should slide in or appear from the side without shifting or pushing the main content. Ensure it pops over the page with a higher z-index and displays correctly at the top layer. Keep it clean, responsive, and consistent with the overall design.
+```

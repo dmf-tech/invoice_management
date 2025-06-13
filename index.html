@@ -66,32 +66,63 @@
         </div>
 
         <!-- Mobile menu -->
-        <div class="sm:hidden hidden" id="mobile-menu">
-            <div class="pt-2 pb-3 space-y-1">
-                <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onclick="handleNavClick(event, 'Dashboard')">
-                    <i class="fas fa-chart-line w-6 text-gray-400"></i>
-                    Dashboard
-                </a>
-                <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onclick="handleNavClick(event, 'Invoices')">
-                    <i class="fas fa-file-invoice w-6 text-gray-400"></i>
-                    Invoices
-                </a>
-                <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onclick="handleNavClick(event, 'Clients')">
-                    <i class="fas fa-users w-6 text-gray-400"></i>
-                    Clients
-                </a>
-                <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onclick="handleNavClick(event, 'Reports')">
-                    <i class="fas fa-chart-bar w-6 text-gray-400"></i>
-                    Reports
-                </a>
-                <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50" onclick="handleNavClick(event, 'Settings')">
-                    <i class="fas fa-cog w-6 text-gray-400"></i>
-                    Settings
-                </a>
-                <button class="w-full flex items-center justify-center bg-indigo-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mt-2" onclick="handleNewInvoice()">
-                    <i class="fas fa-plus mr-2"></i>
-                    New Invoice
-                </button>
+        <div id="mobileMenu" class="fixed inset-0 bg-gray-600 bg-opacity-75 z-50 hidden transition-opacity duration-300 ease-in-out">
+            <div class="fixed inset-y-0 right-0 max-w-xs w-full bg-white shadow-xl transform transition-transform duration-300 ease-in-out translate-x-full">
+                <div class="h-full flex flex-col">
+                    <div class="px-4 py-6 bg-indigo-600">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-lg font-medium text-white">Menu</h2>
+                            <button onclick="toggleMobileMenu()" class="text-white hover:text-gray-200 focus:outline-none">
+                                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex-1 px-4 py-6 overflow-y-auto">
+                        <nav class="space-y-4">
+                            <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-indigo-600 transition-colors duration-200">
+                                <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                                </svg>
+                                Dashboard
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-indigo-600 transition-colors duration-200">
+                                <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Invoices
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-indigo-600 transition-colors duration-200">
+                                <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                </svg>
+                                Clients
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-indigo-600 transition-colors duration-200">
+                                <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                </svg>
+                                Reports
+                            </a>
+                            <a href="#" class="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-900 hover:bg-gray-50 hover:text-indigo-600 transition-colors duration-200">
+                                <svg class="w-5 h-5 mr-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                                Settings
+                            </a>
+                        </nav>
+                    </div>
+                    <div class="px-4 py-6 border-t border-gray-200">
+                        <button class="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            New Invoice
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -317,9 +348,51 @@
     <script>
         // Toggle mobile menu
         function toggleMobileMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenu.classList.toggle('hidden');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuPanel = mobileMenu.querySelector('div > div');
+            
+            if (mobileMenu.classList.contains('hidden')) {
+                // Show menu
+                mobileMenu.classList.remove('hidden');
+                // Trigger reflow
+                mobileMenu.offsetHeight;
+                // Add opacity
+                mobileMenu.classList.add('opacity-100');
+                // Slide in panel
+                menuPanel.classList.remove('translate-x-full');
+            } else {
+                // Slide out panel
+                menuPanel.classList.add('translate-x-full');
+                // Fade out overlay
+                mobileMenu.classList.remove('opacity-100');
+                // Wait for animation to complete
+                setTimeout(() => {
+                    mobileMenu.classList.add('hidden');
+                }, 300);
+            }
         }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const mobileMenu = document.getElementById('mobileMenu');
+            const menuPanel = mobileMenu.querySelector('div > div');
+            
+            if (!mobileMenu.classList.contains('hidden') && 
+                !menuPanel.contains(event.target) && 
+                !event.target.closest('button[onclick="toggleMobileMenu()"]')) {
+                toggleMobileMenu();
+            }
+        });
+
+        // Close menu on escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const mobileMenu = document.getElementById('mobileMenu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    toggleMobileMenu();
+                }
+            }
+        });
 
         // Navigation Click Handler
         function handleNavClick(event, section) {
