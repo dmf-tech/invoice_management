@@ -154,22 +154,29 @@
             <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 rounded-t-lg">
                 <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
                     <h2 class="text-lg font-medium text-gray-900">Outstanding Invoices</h2>
-                    <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                        <!-- Filter Dropdown -->
-                        <select id="statusFilter" onchange="filterInvoices()" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                            <option value="all">All Status</option>
-                            <option value="paid">Paid</option>
-                            <option value="pending">Pending</option>
-                            <option value="overdue">Overdue</option>
-                        </select>
-                        <!-- Sort Dropdown -->
-                        <select id="sortBy" onchange="sortInvoices()" class="rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-sm">
-                            <option value="date-desc">Date (Newest)</option>
-                            <option value="date-asc">Date (Oldest)</option>
-                            <option value="amount-desc">Amount (High to Low)</option>
-                            <option value="amount-asc">Amount (Low to High)</option>
-                            <option value="client">Client Name</option>
-                        </select>
+                    <!-- Filter and Sort Controls -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <div class="w-full sm:w-auto flex items-center gap-3">
+                            <div class="relative w-full sm:w-48">
+                                <select id="filterStatus" class="w-full px-3 py-2 bg-white border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 appearance-none cursor-pointer">
+                                    <option value="all">All Status</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="overdue">Overdue</option>
+                                </select>
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <button id="sortButton" class="flex items-center gap-2 px-3 py-2 bg-white border border-gray-300 rounded-md text-sm text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors duration-200">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"></path>
+                                </svg>
+                                Sort
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -179,16 +186,16 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice #</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Invoice #</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Client</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Due Date</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                         </tr>
                     </thead>
-                    <tbody id="invoicesTableBody" class="bg-white divide-y divide-gray-200">
-                        <!-- Table rows will be populated by JavaScript -->
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        <!-- Table content will be populated by JavaScript -->
                     </tbody>
                 </table>
             </div>
@@ -308,7 +315,7 @@
 
     <!-- Updated JavaScript -->
     <script>
-        // Mobile Menu Toggle
+        // Toggle mobile menu
         function toggleMobileMenu() {
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenu.classList.toggle('hidden');
@@ -389,165 +396,151 @@
             }
         });
 
-        // Invoice Data
+        // Sample invoice data
         const invoices = [
-            {
-                id: 'INV-001',
-                client: 'Acme Corp',
-                date: '2024-03-15',
-                amount: 8500.00,
-                status: 'paid'
-            },
-            {
-                id: 'INV-002',
-                client: 'TechStart Inc',
-                date: '2024-03-14',
-                amount: 12500.00,
-                status: 'paid'
-            },
-            {
-                id: 'INV-003',
-                client: 'Global Solutions',
-                date: '2024-03-13',
-                amount: 7500.00,
-                status: 'pending'
-            },
-            {
-                id: 'INV-004',
-                client: 'Innovate Labs',
-                date: '2024-03-12',
-                amount: 5750.00,
-                status: 'overdue'
-            },
-            {
-                id: 'INV-005',
-                client: 'Digital Dynamics',
-                date: '2024-03-11',
-                amount: 11500.00,
-                status: 'paid'
-            }
+            { id: 'INV-001', client: 'Acme Corp', amount: 2500.00, date: '2024-03-15', dueDate: '2024-04-15', status: 'paid' },
+            { id: 'INV-002', client: 'TechStart Inc', amount: 1800.00, date: '2024-03-14', dueDate: '2024-04-14', status: 'pending' },
+            { id: 'INV-003', client: 'Global Services', amount: 3200.00, date: '2024-03-13', dueDate: '2024-04-13', status: 'overdue' },
+            { id: 'INV-004', client: 'Innovate Co', amount: 950.00, date: '2024-03-12', dueDate: '2024-04-12', status: 'pending' },
+            { id: 'INV-005', client: 'Future Systems', amount: 4200.00, date: '2024-03-11', dueDate: '2024-04-11', status: 'paid' }
         ];
 
-        // Initialize the table
-        function initializeTable() {
-            const tableBody = document.getElementById('invoicesTableBody');
-            tableBody.innerHTML = '';
-            
-            invoices.forEach(invoice => {
-                const row = createInvoiceRow(invoice);
-                tableBody.appendChild(row);
-            });
-        }
+        // Filter and sort state
+        let currentFilter = 'all';
+        let currentSort = 'date-desc';
 
-        // Create invoice row
-        function createInvoiceRow(invoice) {
-            const row = document.createElement('tr');
-            
-            const statusClasses = {
-                paid: 'bg-green-100 text-green-800',
-                pending: 'bg-yellow-100 text-yellow-800',
-                overdue: 'bg-red-100 text-red-800'
-            };
+        // Sort options with labels
+        const sortOptions = [
+            { value: 'date-desc', label: 'Date (Newest)', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12' },
+            { value: 'date-asc', label: 'Date (Oldest)', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4 4m0 0l4-4m-4 4v-12' },
+            { value: 'amount-desc', label: 'Amount (High to Low)', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12' },
+            { value: 'amount-asc', label: 'Amount (Low to High)', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4 4m0 0l4-4m-4 4v-12' },
+            { value: 'status', label: 'Status', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12' },
+            { value: 'dueDate-desc', label: 'Due Date (Latest)', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12' },
+            { value: 'dueDate-asc', label: 'Due Date (Earliest)', icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4 4m0 0l4-4m-4 4v-12' }
+        ];
 
-            row.innerHTML = `
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${invoice.id}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${invoice.client}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">${formatDate(invoice.date)}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">$${formatAmount(invoice.amount)}</td>
-                <td class="px-6 py-4 whitespace-nowrap">
-                    <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${statusClasses[invoice.status]}">
-                        ${capitalizeFirst(invoice.status)}
-                    </span>
-                </td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    <button onclick="handleViewInvoice('${invoice.id}')" class="text-indigo-600 hover:text-indigo-900 mr-3 transition-colors duration-200">
-                        <i class="fas fa-eye mr-1"></i>View
-                    </button>
-                    <button onclick="handleEditInvoice('${invoice.id}')" class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200">
-                        <i class="fas fa-edit mr-1"></i>Edit
-                    </button>
-                </td>
-            `;
-            
-            return row;
-        }
-
-        // Format date
-        function formatDate(dateString) {
-            const options = { year: 'numeric', month: 'short', day: 'numeric' };
-            return new Date(dateString).toLocaleDateString('en-US', options);
-        }
-
-        // Format amount
-        function formatAmount(amount) {
-            return amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        }
-
-        // Capitalize first letter
-        function capitalizeFirst(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
+        // Filter invoices
+        function filterInvoices() {
+            currentFilter = document.getElementById('filterStatus').value;
+            updateTable();
         }
 
         // Sort invoices
         function sortInvoices() {
-            const sortBy = document.getElementById('sortBy').value;
-            const [field, direction] = sortBy.split('-');
+            const currentIndex = sortOptions.findIndex(option => option.value === currentSort);
+            const nextIndex = (currentIndex + 1) % sortOptions.length;
+            currentSort = sortOptions[nextIndex].value;
             
-            invoices.sort((a, b) => {
-                let comparison = 0;
-                
-                if (field === 'date') {
-                    comparison = new Date(a.date) - new Date(b.date);
-                } else if (field === 'amount') {
-                    comparison = a.amount - b.amount;
-                } else if (field === 'client') {
-                    comparison = a.client.localeCompare(b.client);
+            // Update sort button icon and tooltip
+            updateSortButtonIcon();
+            updateTable();
+        }
+
+        // Update sort button icon
+        function updateSortButtonIcon() {
+            const sortButton = document.getElementById('sortButton');
+            const icon = sortButton.querySelector('svg');
+            const currentOption = sortOptions.find(option => option.value === currentSort);
+            
+            // Clear existing paths
+            icon.innerHTML = '';
+            
+            // Add new path
+            const pathElement = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            pathElement.setAttribute('stroke-linecap', 'round');
+            pathElement.setAttribute('stroke-linejoin', 'round');
+            pathElement.setAttribute('stroke-width', '2');
+            pathElement.setAttribute('d', currentOption.icon);
+            icon.appendChild(pathElement);
+
+            // Update button title for tooltip
+            sortButton.title = `Sort by: ${currentOption.label}`;
+        }
+
+        // Update table with filtered and sorted data
+        function updateTable() {
+            const tbody = document.querySelector('tbody');
+            let filteredInvoices = [...invoices];
+
+            // Apply filter
+            if (currentFilter !== 'all') {
+                filteredInvoices = filteredInvoices.filter(invoice => invoice.status === currentFilter);
+            }
+
+            // Apply sort
+            filteredInvoices.sort((a, b) => {
+                switch(currentSort) {
+                    case 'date-desc':
+                        return new Date(b.date) - new Date(a.date);
+                    case 'date-asc':
+                        return new Date(a.date) - new Date(b.date);
+                    case 'amount-desc':
+                        return b.amount - a.amount;
+                    case 'amount-asc':
+                        return a.amount - b.amount;
+                    case 'status':
+                        return a.status.localeCompare(b.status);
+                    case 'dueDate-desc':
+                        return new Date(b.dueDate) - new Date(a.dueDate);
+                    case 'dueDate-asc':
+                        return new Date(a.dueDate) - new Date(b.dueDate);
+                    default:
+                        return 0;
                 }
-                
-                return direction === 'desc' ? -comparison : comparison;
             });
-            
-            initializeTable();
-        }
 
-        // Filter invoices
-        function filterInvoices() {
-            const status = document.getElementById('statusFilter').value;
-            const tableBody = document.getElementById('invoicesTableBody');
-            tableBody.innerHTML = '';
-            
-            const filteredInvoices = status === 'all' 
-                ? invoices 
-                : invoices.filter(invoice => invoice.status === status);
-            
-            filteredInvoices.forEach(invoice => {
-                const row = createInvoiceRow(invoice);
-                tableBody.appendChild(row);
-            });
-        }
-
-        // Handle view invoice
-        function handleViewInvoice(invoiceId) {
-            const invoice = invoices.find(inv => inv.id === invoiceId);
-            showNotification(`Viewing invoice ${invoiceId} for ${invoice.client}`);
-        }
-
-        // Handle edit invoice
-        function handleEditInvoice(invoiceId) {
-            const invoice = invoices.find(inv => inv.id === invoiceId);
-            showNotification(`Editing invoice ${invoiceId} for ${invoice.client}`);
+            // Update table content
+            tbody.innerHTML = filteredInvoices.map(invoice => `
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${invoice.id}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${invoice.client}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${invoice.amount.toFixed(2)}</td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${invoice.dueDate}</td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 py-1 text-xs font-medium rounded-full ${
+                            invoice.status === 'paid' ? 'bg-green-100 text-green-800' :
+                            invoice.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-red-100 text-red-800'
+                        }">${invoice.status.charAt(0).toUpperCase() + invoice.status.slice(1)}</span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        <div class="flex items-center space-x-3">
+                            <button class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200" title="View Invoice">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                </svg>
+                            </button>
+                            <button class="text-indigo-600 hover:text-indigo-900 transition-colors duration-200" title="Edit Invoice">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
         }
 
         // Handle view all invoices
         function handleViewAllInvoices() {
             showNotification('Viewing all invoices...');
-            document.getElementById('statusFilter').value = 'all';
+            document.getElementById('filterStatus').value = 'all';
             filterInvoices();
         }
 
-        // Initialize the table when the page loads
-        document.addEventListener('DOMContentLoaded', () => {
-            initializeTable();
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Filter event listener
+            document.getElementById('filterStatus').addEventListener('change', filterInvoices);
+            
+            // Sort event listener
+            document.getElementById('sortButton').addEventListener('click', sortInvoices);
+            
+            // Initial table update
+            updateTable();
+            updateSortButtonIcon();
         });
     </script>
 </body>

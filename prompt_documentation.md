@@ -45,7 +45,22 @@ On small screens, update the footer layout so that the Quick Links and Support s
 For the invoice table, improve the visual design to make it more appealing while keeping it clear and easy to read. Ensure the columns and rows are well-defined, spacing is consistent, and all text remains readable. Keep the enhancements minimal the goal is a cleaner and more polished look without changing the structure or functionality.
 ```
 
-### Filter and Sort Implementation
+### Filter and Sort UI Design
 ```markdown
 Everything is already working as intended, including the filter and sort buttons. Please just enhance the UI slightly to improve usability and appearance. Focus on simple UI/UX improvements to make the layout cleaner and more user-friendly.
+```
+
+### Filter and Sort Responsiveness
+```markdown
+Improve the filter and sort UI for small screens. Keep it functional but simplify the layout into a single row with a styled filter dropdown and sort button. Focus only on UI functionality is already working. Ensure it's responsive, readable, and supports horizontal scrolling on the invoice table. Keep the design clean and consistent.
+```
+
+### Filter and Sort Functions
+```markdown
+The UI looks great now, but the filter and sort functions no longer work on updating the invoice table. Please fix the functionality without changing the current UI layout. Ensure both features work as intended while keeping the design and responsiveness intact.
+```
+
+### Filter and Sort Alignment to Dashboard
+```markdown
+Ensure the table header aligns correctly with its content. Add a consistently styled "Edit" button in the Action column. Restore and enhance the sort functionality allow sorting by Status, Due Date, and Amount. Maintain consistency in button design, and ensure the table data remains accurately aligned with the dashboard metrics.
 ```
